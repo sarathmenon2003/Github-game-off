@@ -14,7 +14,7 @@ public class playermovement : MonoBehaviour
     public float checkRadius;
     public LayerMask whatIsGround;
 
-
+    bool facingRight = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +29,15 @@ public class playermovement : MonoBehaviour
         Vector2 dir = new Vector2(x, y);
         Walk(dir);
         animator.SetFloat("speed", Mathf.Abs(x));
-
+        
+        if (x < 0 && facingRight)
+        {
+            flip();
+        }
+        else if (x > 0 && !facingRight)
+		{
+            flip();
+		}
 
     }
     private void Walk(Vector2 dir)
@@ -45,5 +53,11 @@ public class playermovement : MonoBehaviour
             rb.velocity = Vector2.up * jumpForce;
         }
     }
+    void flip()
+	{
+
+        facingRight = !facingRight;
+        transform.Rotate(0f, 180f, 0f);
+	}
 
 }
