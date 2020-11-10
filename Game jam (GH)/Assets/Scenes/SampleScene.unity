@@ -3056,6 +3056,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  extraJumpsValue: 1
 --- !u!114 &659343340
 MonoBehaviour:
   m_ObjectHideFlags: 0

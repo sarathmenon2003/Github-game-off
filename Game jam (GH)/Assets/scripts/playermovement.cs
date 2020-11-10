@@ -13,11 +13,13 @@ public class playermovement : MonoBehaviour
     public Transform feetPos;
     public float checkRadius;
     public LayerMask whatIsGround;
-
+    private int extraJumps;
+    public int extraJumpsValue;
     bool facingRight = true;
     // Start is called before the first frame update
     void Start()
     {
+        extraJumps = extraJumpsValue;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -48,10 +50,28 @@ public class playermovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
-        if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
+       
+        if(isGrounded == true)
+		{
+            extraJumps = extraJumpsValue;
+		}
+        
+        if (Input.GetKeyDown(KeyCode.Space) && extraJumps > 0) 
         {
+            animator.SetBool("isJumping", true);
+            rb.velocity = Vector2.up * jumpForce;
+            extraJumps--;
+        }
+        else if(isGrounded == true && Input.GetKeyDown(KeyCode.Space) && extraJumps == 0)
+		{
+            animator.SetBool("isJumping", true);
             rb.velocity = Vector2.up * jumpForce;
         }
+        
+        
+        animator.SetBool("isJumping", !isGrounded);
+        animator.SetFloat("yVel", rb.velocity.y);
+        
     }
     void flip()
 	{
