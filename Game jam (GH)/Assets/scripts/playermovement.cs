@@ -40,7 +40,11 @@ public class playermovement : MonoBehaviour
 		{
             flip();
 		}
+       
 
+
+        animator.SetBool("isJumping", !isGrounded);
+        animator.SetFloat("yVel", rb.velocity.y);
     }
     private void Walk(Vector2 dir)
     {
@@ -50,28 +54,24 @@ public class playermovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
-       
-        if(isGrounded == true)
-		{
+
+        if (isGrounded == true)
+        {
             extraJumps = extraJumpsValue;
-		}
-        
-        if (Input.GetKeyDown(KeyCode.Space) && extraJumps > 0) 
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && extraJumps > 0)
         {
             animator.SetBool("isJumping", true);
             rb.velocity = Vector2.up * jumpForce;
             extraJumps--;
         }
-        else if(isGrounded == true && Input.GetKeyDown(KeyCode.Space) && extraJumps == 0)
-		{
+        else if (isGrounded == true && Input.GetKeyDown(KeyCode.Space) && extraJumps == 0)
+        {
             animator.SetBool("isJumping", true);
             rb.velocity = Vector2.up * jumpForce;
         }
-        
-        
-        animator.SetBool("isJumping", !isGrounded);
-        animator.SetFloat("yVel", rb.velocity.y);
-        
+
     }
     void flip()
 	{
